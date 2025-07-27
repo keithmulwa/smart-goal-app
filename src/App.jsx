@@ -37,6 +37,7 @@ const App = () => {
     } catch (error) {
       console.error('Failed to update goal:', error);
       alert('Failed to update goal.');
+      
     }
   };
 
