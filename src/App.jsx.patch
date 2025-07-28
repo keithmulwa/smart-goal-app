@@ -1,91 +1,54 @@
-const fetchGoals = async () => {
-      const response = await axios.get('http://localhost:3000/goals');
+useEffect(() => {
+  const fetchGoals = async () => {
+    try {
+      const response = await axios.get('https://smart-goal-app.onrender.com/goals');
       setGoals(response.data);
-    };
-    fetchGoals();
-  }, []);
-=======
-  useEffect(() => {
-    const fetchGoals = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/goals');
-        setGoals(response.data);
-      } catch (error) {
-        console.error('Failed to fetch goals:', error);
-        alert('Failed to fetch goals from server.');
-      }
-    };
-    fetchGoals();
-  }, []);
->>>>>>> REPLACE
+    } catch (error) {
+      console.error('Failed to fetch goals:', error);
+      alert('Failed to fetch goals from server.');
+    }
+  };
+  fetchGoals();
+}, []);
 
-<<<<<<< SEARCH
-  const addGoal = async (goal) => {
-    const response = await axios.post('http://localhost:3000/goals', goal);
+const addGoal = async (goal) => {
+  try {
+    const response = await axios.post('https://smart-goal-app.onrender.com/goals', goal);
     setGoals([...goals, response.data]);
-  };
-=======
-  const addGoal = async (goal) => {
-    try {
-      const response = await axios.post('http://localhost:3000/goals', goal);
-      setGoals([...goals, response.data]);
-    } catch (error) {
-      console.error('Failed to add goal:', error);
-      alert('Failed to add goal.');
-    }
-  };
->>>>>>> REPLACE
+  } catch (error) {
+    console.error('Failed to add goal:', error);
+    alert('Failed to add goal.');
+  }
+};
 
-<<<<<<< SEARCH
-  const updateGoal = async (id, updatedGoal) => {
-    await axios.put(`http://localhost:3000/goals/${id}`, updatedGoal);
-    setGoals(goals.map(goal => (goal.id === id ? updatedGoal : goal)));
-  };
-=======
-  const updateGoal = async (id, updatedGoal) => {
-    try {
-      const response = await axios.put(`http://localhost:3000/goals/${id}`, updatedGoal);
-      setGoals(goals.map(goal => (goal.id === id ? response.data : goal)));
-    } catch (error) {
-      console.error('Failed to update goal:', error);
-      alert('Failed to update goal.');
-    }
-  };
->>>>>>> REPLACE
+const updateGoal = async (id, updatedGoal) => {
+  try {
+    const response = await axios.put(`https://smart-goal-app.onrender.com/goals/${id}`, updatedGoal);
+    setGoals(goals.map(goal => (goal.id === id ? response.data : goal)));
+  } catch (error) {
+    console.error('Failed to update goal:', error);
+    alert('Failed to update goal.');
+  }
+};
 
-<<<<<<< SEARCH
-  const deleteGoal = async (id) => {
-    await axios.delete(`http://localhost:3000/goals/${id}`);
+const deleteGoal = async (id) => {
+  try {
+    await axios.delete(`https://smart-goal-app.onrender.com/goals/${id}`);
     setGoals(goals.filter(goal => goal.id !== id));
-  };
-=======
-  const deleteGoal = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3000/goals/${id}`);
-      setGoals(goals.filter(goal => goal.id !== id));
-    } catch (error) {
-      console.error('Failed to delete goal:', error);
-      alert('Failed to delete goal.');
-    }
-  };
->>>>>>> REPLACE
+  } catch (error) {
+    console.error('Failed to delete goal:', error);
+    alert('Failed to delete goal.');
+  }
+};
 
-<<<<<<< SEARCH
-  const makeDeposit = async (id, amount) => {
+const makeDeposit = async (id, amount) => {
+  try {
     const goal = goals.find(goal => goal.id === id);
     const updatedGoal = { ...goal, savedAmount: goal.savedAmount + amount };
-    await axios.patch(`http://localhost:3000/goals/${id}`, updatedGoal);
-    setGoals(goals.map(g => (g.id === id ? updatedGoal : g)));
-  };
-=======
-  const makeDeposit = async (id, amount) => {
-    try {
-      const goal = goals.find(goal => goal.id === id);
-      const updatedGoal = { ...goal, savedAmount: goal.savedAmount + amount };
-      const response = await axios.patch(`http://localhost:3000/goals/${id}`, updatedGoal);
-      setGoals(goals.map(g => (g.id === id ? response.data : g)));
-    } catch (error) {
-      console.error('Failed to make deposit:', error);
-      alert('Failed to make deposit.');
-    }
-  };
+    const response = await axios.patch(`https://smart-goal-app.onrender.com/goals/${id}`, updatedGoal);
+    setGoals(goals.map(g => (g.id === id ? response.data : g)));
+  } catch (error) {
+    console.error('Failed to make deposit:', error);
+    alert('Failed to make deposit.');
+  }
+};

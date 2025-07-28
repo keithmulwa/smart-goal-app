@@ -7,10 +7,12 @@ import Overview from './components/Overview';
 const App = () => {
   const [goals, setGoals] = useState([]);
 
+  const BASE_URL = 'https://smart-goal-app.onrender.com';
+
   useEffect(() => {
     const fetchGoals = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/goals');
+        const response = await axios.get(`${BASE_URL}/goals`);
         setGoals(response.data);
       } catch (error) {
         console.error('Failed to fetch goals:', error);
@@ -22,7 +24,7 @@ const App = () => {
 
   const addGoal = async (goal) => {
     try {
-      const response = await axios.post('http://localhost:3000/goals', goal);
+      const response = await axios.post(`${BASE_URL}/goals`, goal);
       setGoals([...goals, response.data]);
     } catch (error) {
       console.error('Failed to add goal:', error);
@@ -32,18 +34,17 @@ const App = () => {
 
   const updateGoal = async (id, updatedGoal) => {
     try {
-      const response = await axios.put(`http://localhost:3000/goals/${id}`, updatedGoal);
+      const response = await axios.put(`${BASE_URL}/goals/${id}`, updatedGoal);
       setGoals(goals.map(goal => (goal.id === id ? response.data : goal)));
     } catch (error) {
       console.error('Failed to update goal:', error);
       alert('Failed to update goal.');
-      
     }
   };
 
   const deleteGoal = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/goals/${id}`);
+      await axios.delete(`${BASE_URL}/goals/${id}`);
       setGoals(goals.filter(goal => goal.id !== id));
     } catch (error) {
       console.error('Failed to delete goal:', error);
@@ -55,7 +56,7 @@ const App = () => {
     try {
       const goal = goals.find(goal => goal.id === id);
       const updatedFields = { savedAmount: goal.savedAmount + amount };
-      const response = await axios.patch(`http://localhost:3000/goals/${id}`, updatedFields);
+      const response = await axios.patch(`${BASE_URL}/goals/${id}`, updatedFields);
       setGoals(goals.map(g => (g.id === id ? response.data : g)));
     } catch (error) {
       console.error('Failed to make deposit:', error);
@@ -67,7 +68,12 @@ const App = () => {
     <div>
       <h1>Smart Goal Planner</h1>
       <GoalForm addGoal={addGoal} />
-      <GoalList goals={goals} updateGoal={updateGoal} deleteGoal={deleteGoal} makeDeposit={makeDeposit} />
+      <GoalList
+        goals={goals}
+        updateGoal={updateGoal}
+        deleteGoal={deleteGoal}
+        makeDeposit={makeDeposit}
+      />
       <Overview goals={goals} />
     </div>
   );
